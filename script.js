@@ -4,43 +4,58 @@ const noBtn = document.getElementById("noBtn");
 const heartsLayer = document.getElementById("hearts");
 const overlay = document.getElementById("overlay");
 
-// --- Fond animé : cœurs/étoiles qui tombent ---
+/* ✅ Sécurité : si un élément manque, on évite de casser tout le script */
+if (!heartsLayer || !overlay || !yesBtn || !maybeBtn || !noBtn) {
+  console.warn("Missing elements: check your IDs in index.html");
+}
+
+/* --- Fond animé : cœurs/étoiles qui tombent --- */
 const icons = ["💖", "💕", "💘", "❤️", "✨", "⭐️"];
 
 function spawnFallingIcon() {
+  if (!heartsLayer) return;
+
   const el = document.createElement("span");
   el.className = "fall";
   el.textContent = icons[Math.floor(Math.random() * icons.length)];
 
+  const duration = 4 + Math.random() * 5; // 4–9s
+  const size = 16 + Math.random() * 20;
+
   el.style.left = `${Math.random() * 100}vw`;
-  el.style.animationDuration = `${4 + Math.random() * 5}s`;
-  el.style.fontSize = `${16 + Math.random() * 20}px`;
+  el.style.animationDuration = `${duration}s`;
+  el.style.fontSize = `${size}px`;
 
   heartsLayer.appendChild(el);
 
-  // nettoyage
-  setTimeout(() => el.remove(), 10000);
+  // ✅ nettoyage basé sur la durée réelle
+  setTimeout(() => el.remove(), duration * 1000 + 300);
 }
+
 setInterval(spawnFallingIcon, 220);
 
-// --- Overlay message (au centre) ---
+/* --- Overlay message (au centre) --- */
 let hideTimer = null;
 
 function showCenterMessage(htmlText) {
+  if (!overlay) return;
+
   overlay.innerHTML = `<div class="bubble wiggle">${htmlText}</div>`;
   overlay.classList.add("show");
 
   // relance animation wiggle
   const bubble = overlay.querySelector(".bubble");
-  bubble.classList.remove("wiggle");
-  void bubble.offsetWidth;
-  bubble.classList.add("wiggle");
+  if (bubble) {
+    bubble.classList.remove("wiggle");
+    void bubble.offsetWidth;
+    bubble.classList.add("wiggle");
+  }
 
   clearTimeout(hideTimer);
   hideTimer = setTimeout(() => overlay.classList.remove("show"), 2600);
 }
 
-// --- Particules (bisous etc.) ---
+/* --- Particules (bisous etc.) --- */
 function popAt(x, y, emoji) {
   const el = document.createElement("span");
   el.className = "pop";
@@ -60,21 +75,20 @@ function kissBurst(amount = 36) {
   }
 }
 
-// boost de cœurs (en plus du fond)
 function heartsBurst(amount = 80) {
   for (let i = 0; i < amount; i++) {
     setTimeout(spawnFallingIcon, i * 12);
   }
 }
 
-// --- Actions boutons ---
-yesBtn.addEventListener("click", () => {
+/* --- Actions boutons --- */
+yesBtn?.addEventListener("click", () => {
   showCenterMessage("I’m the luckiest ❤️");
   kissBurst(80);
   heartsBurst(120);
 });
 
-maybeBtn.addEventListener("click", () => {
+maybeBtn?.addEventListener("click", () => {
   showCenterMessage("😢 I’ll wait…");
   for (let i = 0; i < 16; i++) {
     const x = Math.random() * window.innerWidth;
@@ -84,8 +98,10 @@ maybeBtn.addEventListener("click", () => {
   }
 });
 
-// --- NO qui s’échappe (iPad friendly) ---
+/* --- NO qui s’échappe (iPad friendly) --- */
 function moveNoButton() {
+  if (!noBtn) return;
+
   const padding = 16;
   const maxX = Math.max(0, window.innerWidth - noBtn.offsetWidth - padding);
   const maxY = Math.max(0, window.innerHeight - noBtn.offsetHeight - padding);
@@ -96,12 +112,24 @@ function moveNoButton() {
   noBtn.style.zIndex = "9999";
 }
 
-// iPad / tactile : au toucher
-noBtn.addEventListener("pointerdown", (e) => {
+/* ✅ iPad / tactile : pointer + touch (ultra fiable) */
+noBtn?.addEventListener("pointerdown", (e) => {
   e.preventDefault();
   moveNoButton();
   popAt(window.innerWidth * 0.5, window.innerHeight * 0.45, "💨");
 });
 
-// ordi : au survol
-noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn?.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  moveNoButton();
+  popAt(window.innerWidth * 0.5, window.innerHeight * 0.45, "💨");
+}, { passive: false });
+
+/* ✅ ordi : au survol */
+noBtn?.addEventListener("mouseenter", moveNoButton);
+
+/* ✅ si jamais il arrive à cliquer */
+noBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  moveNoButton();
+});
