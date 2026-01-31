@@ -4,30 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valentine</title>
+
   <link rel="stylesheet" href="./style.css" />
   <script src="./script.js" defer></script>
 </head>
 
 <body>
-  <!-- Fond animé -->
+  <!-- Fond animé (rempli par le JS) -->
   <div id="hearts" aria-hidden="true"></div>
 
-  <!-- Contenu centré -->
+  <!-- Message popup au centre (rempli par le JS) -->
+  <div id="overlay" class="overlay" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Contenu principal -->
   <main class="wrap">
-    <img class="photo" src="./img/photo.jpeg" alt="Photo" />
+    <section class="card">
+      <img class="photo" src="./img/photo.jpeg" alt="Photo" />
 
-    <h1>Will you be my Valentine? 💘</h1>
+      <h1 class="title">Will you be my Valentine? 💘</h1>
 
-    <div class="btns">
-      <button id="yesBtn" type="button">Yes 💖</button>
-      <button id="maybeBtn" type="button">Maybe 😳</button>
-      <button id="noBtn" type="button">No 🙃</button>
-    </div>
+      <p class="loveText">Je t’aime, t’es la meilleure chose qui me soit arrivée ❤️</p>
 
-    <p id="message" class="message" aria-live="polite"></p>
+      <div class="btns">
+        <button id="yesBtn" type="button">Yes 💖</button>
+        <button id="maybeBtn" type="button">Maybe 😳</button>
+        <button id="noBtn" type="button">No 🙃</button>
+      </div>
 
-    <p class="credit">— by TK, for Vinanh 💌</p>
+      <p class="credit">— by TK, for Vinanh 💌</p>
+    </section>
   </main>
 </body>
 </html>
-<p class="loveText">Je t’aime, t’es la meilleure chose qui me soit arrivée ❤️</p>
