@@ -4,12 +4,11 @@ const noBtn = document.getElementById("noBtn");
 const heartsLayer = document.getElementById("hearts");
 const overlay = document.getElementById("overlay");
 
-/* ✅ Sécurité : si un élément manque, on évite de casser tout le script */
 if (!heartsLayer || !overlay || !yesBtn || !maybeBtn || !noBtn) {
   console.warn("Missing elements: check your IDs in index.html");
 }
 
-/* --- Fond animé : cœurs/étoiles qui tombent --- */
+/* --- Fond animé --- */
 const icons = ["💖", "💕", "💘", "❤️", "✨", "⭐️"];
 
 function spawnFallingIcon() {
@@ -28,13 +27,12 @@ function spawnFallingIcon() {
 
   heartsLayer.appendChild(el);
 
-  // ✅ nettoyage basé sur la durée réelle
   setTimeout(() => el.remove(), duration * 1000 + 300);
 }
 
 setInterval(spawnFallingIcon, 220);
 
-/* --- Overlay message (au centre) --- */
+/* --- Overlay message au centre --- */
 let hideTimer = null;
 
 function showCenterMessage(htmlText) {
@@ -43,7 +41,6 @@ function showCenterMessage(htmlText) {
   overlay.innerHTML = `<div class="bubble wiggle">${htmlText}</div>`;
   overlay.classList.add("show");
 
-  // relance animation wiggle
   const bubble = overlay.querySelector(".bubble");
   if (bubble) {
     bubble.classList.remove("wiggle");
@@ -55,7 +52,7 @@ function showCenterMessage(htmlText) {
   hideTimer = setTimeout(() => overlay.classList.remove("show"), 2600);
 }
 
-/* --- Particules (bisous etc.) --- */
+/* --- Particules (bisous & co) --- */
 function popAt(x, y, emoji) {
   const el = document.createElement("span");
   el.className = "pop";
@@ -83,13 +80,13 @@ function heartsBurst(amount = 80) {
 
 /* --- Actions boutons --- */
 yesBtn?.addEventListener("click", () => {
-  showCenterMessage("I’m the luckiest ❤️");
+  showCenterMessage("<strong>I’m the luckiest ever 😍✨</strong>");
   kissBurst(80);
   heartsBurst(120);
 });
 
 maybeBtn?.addEventListener("click", () => {
-  showCenterMessage("😢 I’ll wait…");
+  showCenterMessage("<strong>😢 I’ll wait…</strong>");
   for (let i = 0; i < 16; i++) {
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
@@ -112,7 +109,6 @@ function moveNoButton() {
   noBtn.style.zIndex = "9999";
 }
 
-/* ✅ iPad / tactile : pointer + touch (ultra fiable) */
 noBtn?.addEventListener("pointerdown", (e) => {
   e.preventDefault();
   moveNoButton();
@@ -125,10 +121,8 @@ noBtn?.addEventListener("touchstart", (e) => {
   popAt(window.innerWidth * 0.5, window.innerHeight * 0.45, "💨");
 }, { passive: false });
 
-/* ✅ ordi : au survol */
 noBtn?.addEventListener("mouseenter", moveNoButton);
 
-/* ✅ si jamais il arrive à cliquer */
 noBtn?.addEventListener("click", (e) => {
   e.preventDefault();
   moveNoButton();
