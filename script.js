@@ -69,8 +69,8 @@ function heartsBurst(amount = 80) {
 
 // --- Actions boutons ---
 yesBtn.addEventListener("click", () => {
-  showCenterMessage("Je t’aime ❤️<br>t’es la meilleure chose qui me soit arrivée");
-  kissBurst(44);
+  showCenterMessage("I’m the luckiest ❤️");
+  kissBurst(80);
   heartsBurst(120);
 });
 
