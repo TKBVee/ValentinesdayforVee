@@ -1,1 +1,103 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
+body{
+  min-height: 100vh;
+  overflow: hidden; /* important pour le fond animé */
+  display: grid;
+  place-items: center;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at top, #fff1f6, #f3f0ff 45%, #ffe0ef);
+  color: #111;
+}
+
+/* Fond animé */
+#hearts{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Chaque coeur/étoile généré en JS */
+.fall{
+  position: absolute;
+  top: -10vh;
+  font-size: 22px;
+  opacity: 0.9;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+  animation: fall linear forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes fall{
+  0%   { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translate3d(0, 120vh, 0) rotate(360deg); opacity: 0; }
+}
+
+/* Contenu au-dessus du fond */
+.wrap{
+  position: relative;
+  z-index: 1;
+  width: min(720px, 92vw);
+  text-align: center;
+  padding: 18px 16px;
+}
+
+/* Photo au centre */
+.photo{
+  width: min(360px, 78vw);
+  height: min(360px, 78vw);
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.18);
+  border: 6px solid rgba(255,255,255,.7);
+  background: white;
+  margin-bottom: 14px;
+}
+
+h1{
+  font-size: clamp(24px, 4.5vw, 40px);
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  display: inline-block;
+  background: rgba(255,255,255,.75);
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+}
+
+.btns{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+button{
+  border: 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,.10);
+  transition: transform .12s ease, opacity .12s ease;
+}
+
+button:active{ transform: translateY(1px) scale(.99); }
+
+#yesBtn{ background: #ff2d7a; color: #fff; }
+#maybeBtn{ background: #6a5cff; color: #fff; }
+#noBtn{ background: #111; color: #fff; }
+
+.message{
+  margin-top: 12px;
+  min-height: 24px;
+  font-weight: 700;
+}
+
+.credit{
+  margin-top: 10px;
+  opacity: .75;
+  font-weight: 600;
+}
