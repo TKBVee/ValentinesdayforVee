@@ -4,10 +4,10 @@ const noBtn = document.getElementById("noBtn");
 const heartsLayer = document.getElementById("hearts");
 const overlay = document.getElementById("overlay");
 
-// -------- Fond animé (cœurs/étoiles qui tombent) --------
+// --- Fond animé : cœurs/étoiles qui tombent ---
 const icons = ["💖", "💕", "💘", "❤️", "✨", "⭐️"];
 
-function spawnIcon() {
+function spawnFallingIcon() {
   const el = document.createElement("span");
   el.className = "fall";
   el.textContent = icons[Math.floor(Math.random() * icons.length)];
@@ -17,30 +17,30 @@ function spawnIcon() {
   el.style.fontSize = `${16 + Math.random() * 20}px`;
 
   heartsLayer.appendChild(el);
+
+  // nettoyage
   setTimeout(() => el.remove(), 10000);
 }
-setInterval(spawnIcon, 220);
+setInterval(spawnFallingIcon, 220);
 
-// -------- Message au centre (gros + bouge) --------
+// --- Overlay message (au centre) ---
 let hideTimer = null;
 
-function showCenterMessage(text) {
-  overlay.innerHTML = `<div class="bubble wiggle">${text}</div>`;
+function showCenterMessage(htmlText) {
+  overlay.innerHTML = `<div class="bubble wiggle">${htmlText}</div>`;
   overlay.classList.add("show");
 
-  // relancer l’animation wiggle à chaque fois
+  // relance animation wiggle
   const bubble = overlay.querySelector(".bubble");
   bubble.classList.remove("wiggle");
-  void bubble.offsetWidth; // reset animation
+  void bubble.offsetWidth;
   bubble.classList.add("wiggle");
 
   clearTimeout(hideTimer);
-  hideTimer = setTimeout(() => {
-    overlay.classList.remove("show");
-  }, 2200);
+  hideTimer = setTimeout(() => overlay.classList.remove("show"), 2600);
 }
 
-// -------- Bisous qui pop --------
+// --- Particules (bisous etc.) ---
 function popAt(x, y, emoji) {
   const el = document.createElement("span");
   el.className = "pop";
@@ -51,26 +51,32 @@ function popAt(x, y, emoji) {
   setTimeout(() => el.remove(), 1100);
 }
 
-function kissBurst(amount = 22) {
+function kissBurst(amount = 36) {
   for (let i = 0; i < amount; i++) {
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
     const em = Math.random() > 0.25 ? "😘" : "💋";
-    setTimeout(() => popAt(x, y, em), i * 20);
+    setTimeout(() => popAt(x, y, em), i * 18);
   }
 }
 
-// -------- Actions boutons --------
+// boost de cœurs (en plus du fond)
+function heartsBurst(amount = 80) {
+  for (let i = 0; i < amount; i++) {
+    setTimeout(spawnFallingIcon, i * 12);
+  }
+}
+
+// --- Actions boutons ---
 yesBtn.addEventListener("click", () => {
   showCenterMessage("Je t’aime ❤️<br>t’es la meilleure chose qui me soit arrivée");
-  kissBurst(34);
-  // boost de cœurs en plus
-  for (let i = 0; i < 60; i++) setTimeout(spawnIcon, i * 15);
+  kissBurst(44);
+  heartsBurst(120);
 });
 
 maybeBtn.addEventListener("click", () => {
   showCenterMessage("😢 I’ll wait…");
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 16; i++) {
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
     const em = Math.random() > 0.5 ? "🥺" : "💔";
@@ -78,7 +84,7 @@ maybeBtn.addEventListener("click", () => {
   }
 });
 
-// -------- NO qui s’échappe (iPad friendly) --------
+// --- NO qui s’échappe (iPad friendly) ---
 function moveNoButton() {
   const padding = 16;
   const maxX = Math.max(0, window.innerWidth - noBtn.offsetWidth - padding);
@@ -90,12 +96,12 @@ function moveNoButton() {
   noBtn.style.zIndex = "9999";
 }
 
-// iPad: au toucher
+// iPad / tactile : au toucher
 noBtn.addEventListener("pointerdown", (e) => {
   e.preventDefault();
   moveNoButton();
   popAt(window.innerWidth * 0.5, window.innerHeight * 0.45, "💨");
 });
 
-// ordi: au survol
+// ordi : au survol
 noBtn.addEventListener("mouseenter", moveNoButton);
