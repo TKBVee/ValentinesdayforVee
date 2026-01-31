@@ -15,7 +15,8 @@ maybeBtn.addEventListener("click", () => {
   setMessage("Okay… I’ll wait 🥺👉👈");
 });
 
-noBtn.addEventListener("mouseenter", () => {
+// Fonction qui déplace le bouton "No"
+function moveNoButton() {
   const maxX = window.innerWidth - noBtn.offsetWidth - 20;
   const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
@@ -25,8 +26,20 @@ noBtn.addEventListener("mouseenter", () => {
   noBtn.style.position = "fixed";
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
+}
+
+// ✅ iPad / mobile : bouge au toucher
+noBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault(); // évite le "clic" classique
+  moveNoButton();
 });
 
+// ✅ Ordi : bouge au survol (si un jour tu testes sur laptop)
+noBtn.addEventListener("mouseenter", () => {
+  moveNoButton();
+});
+
+// Si jamais il arrive à cliquer (rare 😅)
 noBtn.addEventListener("click", () => {
   setMessage("Impossible 😤");
 });
