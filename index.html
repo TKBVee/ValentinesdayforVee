@@ -1,29 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valentine</title>
-
-  <!-- Le JavaScript sera chargé plus tard -->
+  <link rel="stylesheet" href="./style.css" />
   <script src="./script.js" defer></script>
 </head>
 
 <body>
+  <!-- Fond animé -->
+  <div id="hearts" aria-hidden="true"></div>
 
-  <!-- PHOTO EN HAUT -->
-  <img src="./img/photo.jpeg" alt="Us" width="300">
+  <!-- Contenu centré -->
+  <main class="wrap">
+    <img class="photo" src="./img/photo.jpeg" alt="Photo" />
 
-  <!-- QUESTION -->
-  <h1>Will you be my Valentine? 💘</h1>
+    <h1>Will you be my Valentine? 💘</h1>
 
-  <!-- BOUTONS -->
-  <button id="yesBtn">Yes 💖</button>
-  <button id="maybeBtn">Maybe 😳</button>
-  <button id="noBtn">No 🙃</button>
+    <div class="btns">
+      <button id="yesBtn" type="button">Yes 💖</button>
+      <button id="maybeBtn" type="button">Maybe 😳</button>
+      <button id="noBtn" type="button">No 🙃</button>
+    </div>
 
-  <!-- MESSAGE -->
-  <p id="message"></p>
+    <p id="message" class="message" aria-live="polite"></p>
 
+    <p class="credit">— by TK, for Vinanh 💌</p>
+  </main>
 </body>
 </html>
