@@ -18,7 +18,7 @@ body{
   z-index: 0;
 }
 
-/* Elements qui tombent */
+/* éléments qui tombent */
 .fall{
   position: absolute;
   top: -10vh;
@@ -45,23 +45,23 @@ body{
 }
 
 .card{
-  width: min(520px, 92vw);
+  width: min(540px, 92vw);
   text-align: center;
   padding: 18px 16px 16px;
   border-radius: 22px;
-  background: rgba(255,255,255,.78);
+  background: rgba(255,255,255,.80);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(0,0,0,.06);
   box-shadow: 0 18px 50px rgba(0,0,0,.14);
 }
 
-/* Photo */
+/* Photo centrée */
 .photo{
   width: min(360px, 78vw);
   height: min(360px, 78vw);
   object-fit: cover;
   border-radius: 22px;
-  border: 6px solid rgba(255,255,255,.75);
+  border: 6px solid rgba(255,255,255,.78);
   background: white;
   box-shadow: 0 16px 40px rgba(0,0,0,.18);
   margin-bottom: 14px;
@@ -77,7 +77,7 @@ body{
   margin: 0 auto 12px;
   max-width: 44ch;
   padding: 10px 14px;
-  background: rgba(255,255,255,.78);
+  background: rgba(255,255,255,.80);
   border-radius: 16px;
   font-weight: 800;
   line-height: 1.35;
@@ -134,19 +134,20 @@ button:active{ transform: translateY(1px) scale(.99); }
   transform: scale(1);
 }
 
+/* ✅ Message YES/MAYBE très lisible */
 .overlay .bubble{
-  max-width: min(560px, 86vw);
-  padding: 18px 20px;
-  border-radius: 18px;
-  background: rgba(255,255,255,.86);
-  box-shadow: 0 18px 50px rgba(0,0,0,.20);
-  font-weight: 1000;
-  font-size: clamp(22px, 4.8vw, 44px);
-  line-height: 1.1;
+  max-width: min(600px, 90vw);
+  padding: 22px 24px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 22px 60px rgba(0,0,0,.25);
+  font-weight: 900;
+  font-size: clamp(28px, 6vw, 52px);
+  line-height: 1.15;
   text-align: center;
 }
 
-/* Animation wiggle */
+/* Wiggle */
 @keyframes wiggle{
   0%{ transform: translateX(0) rotate(0deg); }
   15%{ transform: translateX(-10px) rotate(-2deg); }
